@@ -1,0 +1,10 @@
+.logo__title {
+  margin-top: 8px;
+  min-width: 214px;
+  min-height: 47px;
+}
+
+@media screen and (max-width: 1279px) {
+  .logo__title {
+    margin-top: 0;
+  }

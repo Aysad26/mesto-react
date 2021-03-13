@@ -1,0 +1,14 @@
+.number__title {
+  font-weight: normal;
+  font-size: 60px;
+  line-height: 60px;
+  color: white;
+  margin: -5px 0 5px 0;
+}
+
+@media screen and (max-width: 767px) {
+  .number__title {
+      font-size: 48px;
+      line-height: 48px;
+    }
+  }

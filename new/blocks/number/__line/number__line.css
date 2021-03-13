@@ -1,0 +1,14 @@
+.number__line {
+  width: 2px;
+  height: 84px;
+  background-color: #E60094;
+  margin-right: 37px;
+  }
+/*
+@media screen and (max-width: 767px) {
+    .place__website {
+      width: calc(100% - 2*16px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }

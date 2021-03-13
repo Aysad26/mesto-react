@@ -1,0 +1,14 @@
+.menu-link {
+  margin: 0;
+  text-decoration: none;
+}
+
+.menu-link:hover .menu-link__button {
+  background-color:  #7b51d4;
+}
+
+.menu-link:nth-child(8n) {
+  margin-bottom: 0;
+}
+
+

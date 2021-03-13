@@ -1,0 +1,11 @@
+.footer__logo {
+  width: 274px;
+  height: 56px;
+}
+
+@media screen and (max-width: 767px) {
+  .footer__links {
+    flex-direction: column;
+    width: calc(100% - 16px*2);
+  }
+}

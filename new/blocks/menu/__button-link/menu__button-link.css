@@ -1,0 +1,17 @@
+.menu__button-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    box-sizing: border-box;
+    border-radius: 40px;
+    background-color: #E60094;
+    transition: background-color 0.1s ease-in;
+    text-decoration: none;
+}
+  
+  .header__contact-link:hover {
+    background-color: white;
+}

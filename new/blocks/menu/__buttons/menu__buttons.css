@@ -1,0 +1,16 @@
+.menu__buttons {
+  display: none;
+}
+
+@media screen and (max-width: 1279px) {
+  .menu__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0;
+    list-style: none;
+    margin-right: 20px;
+  }
+}
+

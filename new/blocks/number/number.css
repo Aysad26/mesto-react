@@ -1,0 +1,18 @@
+.number {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 46px;
+}
+
+@media screen and (max-width: 1023px) {
+    .number {
+        margin-bottom: 26px;
+    }
+
+    .place:last-of-type {
+        margin-bottom: 0;
+    }
+}
+

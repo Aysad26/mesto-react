@@ -1,0 +1,8 @@
+.menu__link-container {
+  display: none;
+  margin-right: 16px;
+}
+  
+.header__link-container:last-child {
+  margin-right: 0;
+}

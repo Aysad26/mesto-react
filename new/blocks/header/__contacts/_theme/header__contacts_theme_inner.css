@@ -1,0 +1,15 @@
+.header__contacts_theme_inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 30%;
+  padding: 0;
+  list-style: none;
+}
+
+@media screen and (max-width: 1279px) {
+  .header__contacts_theme_inner {
+    display: none;
+  }
+}

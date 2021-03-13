@@ -1,0 +1,11 @@
+.header__index {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  color: white;
+}
+
+.header__contact-link:hover .header__index  {
+  color: #4012A6;
+}
