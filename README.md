@@ -8,4 +8,4 @@
 2. Функциональные компоненты
 3. Хуки useState и useEffect
 
-- [Ссылка на проект в Github](https://cados.github.io/mesto-react/)
+- [Ссылка на проект в Github](https://aysad26.github.io/mesto-react/)
