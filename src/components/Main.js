@@ -38,8 +38,7 @@ function Main(props) {
 
  
   return (
-  <>
-    <main className="main">
+  <main className="main">
     <section className="profile">
       <div className="profile__info">
         <div className="profile__avatar">
@@ -81,10 +80,6 @@ function Main(props) {
       </ul>
     </section>
   </main>
-    
-  <template className="element__item-template" />
-</>
-  
   );
 }
 

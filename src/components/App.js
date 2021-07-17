@@ -14,6 +14,12 @@ function App() {
   function handleEditAvatarClick (){
     setIsEditAvatarPopupOpen(true)
   }
+  const [selectedCard, setSelectedCard] = React.useState({});
+  const [isImagePopupOpen, setImagePopupOpen] = React.useState(false);
+  function handleCardClick(card) {
+    setSelectedCard(card);
+    setImagePopupOpen(true);
+  }
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   function handleEditProfileClick (){
@@ -25,13 +31,11 @@ function App() {
     setIsAddPlacePopupOpen(true)
   }
 
-  const [selectedCard, setSelectedCard] = React.useState({});
-  const handleCardClick = (card) => {setSelectedCard(card)}
-
   function closeAllPopups(){
     setIsEditProfilePopupOpen (false)
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
+    setImagePopupOpen(false);
     setSelectedCard({})
   }
 
@@ -42,11 +46,12 @@ function App() {
         closeAllPopups()
       }
     };
-    window.addEventListener('keydown', handleEsc);
 
-    return () => {
+    if (isEditProfilePopupOpen !== true || isEditAvatarPopupOpen !== true || isAddPlacePopupOpen !== true || isImagePopupOpen !== true) {
+      window.addEventListener('keydown', handleEsc);
+    } else {
       window.removeEventListener('keydown', handleEsc);
-    };
+    }
   }, []);
 
   return (
@@ -132,7 +137,7 @@ function App() {
         </div>
       </fieldset>
     </PopupWithForm>
-    <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
+    <ImagePopup card={selectedCard} onClose={closeAllPopups} isOpen={isImagePopupOpen}/>
   </div>
   );
 }

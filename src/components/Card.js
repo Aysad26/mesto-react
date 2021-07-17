@@ -4,7 +4,7 @@ import Trash from '../images/Trash.svg'
 function Card(props) {
   
   function handleClick() {
-    props.onCardClick(props.dataCards);
+    props.onClick(props.dataCards);
   }  
 
     return(
