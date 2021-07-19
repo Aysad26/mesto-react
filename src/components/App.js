@@ -47,12 +47,15 @@ function App() {
       }
     };
 
-    if (isEditProfilePopupOpen !== true || isEditAvatarPopupOpen !== true || isAddPlacePopupOpen !== true || isImagePopupOpen !== true) {
+    if (isEditProfilePopupOpen === true || isEditAvatarPopupOpen === true || isAddPlacePopupOpen === true || isImagePopupOpen === true) {
       window.addEventListener('keydown', handleEsc);
-    } else {
+    };
+
+    return () => {
       window.removeEventListener('keydown', handleEsc);
-    }
-  }, []);
+    };
+    
+  }, [isEditProfilePopupOpen, isEditAvatarPopupOpen, isAddPlacePopupOpen, isImagePopupOpen]);
 
   return (
   <div className="root">
