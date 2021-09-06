@@ -31,10 +31,7 @@ export class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({ 
-        name: data.name, 
-        about: data.job 
-      }),
+      body: JSON.stringify(data),
     })
     .then(this._getResponseData)
   }
@@ -43,9 +40,7 @@ export class Api {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({
-        avatar: data.avatar
-      })
+      body: JSON.stringify(data)
     })
     .then(this._getResponseData)
   }
@@ -70,28 +65,40 @@ export class Api {
     .then(this._getResponseData)
   }
   
-  setLike(data) {
-    return fetch(`${this._baseUrl}/cards/likes/${data._id}`, {
+  setLike(card) {
+    return fetch(`${this._baseUrl}/cards/likes/${card}`, {
       method: 'PUT',
       headers: this._headers,
     })
     .then(this._getResponseData)
   }
 
-  deleteLike(data) {
-    return fetch(`${this._baseUrl}/cards/likes/${data._id}`, {
+  deleteLike(card) {
+    return fetch(`${this._baseUrl}/cards/likes/${card}`, {
       method: 'DELETE',
       headers: this._headers,
     })
     .then(this._getResponseData)
   }
 
+  changeCardStatus (cardId, isLiked) {
+    return isLiked ? this.deleteCard(cardId) : this.addCard(cardId);
+  }
+
+  changeLikeCardStatus(card, isLiked) {
+    if (isLiked) {
+      return this.setLike(card);
+    } else {
+      return this.deleteLike(card);
+    }
+  }
+
 }
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-26',
   headers: {
-    authorization: 'a161955b-22e4-44f7-ad97-c36f2565c1c8',
+    authorization: 'e02ab8b7-b6ac-4103-9bf7-1aa081d397f1',
     'Content-Type': 'application/json'
   }
 });

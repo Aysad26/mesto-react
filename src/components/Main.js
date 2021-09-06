@@ -2,41 +2,14 @@ import '../index.css';
 import React from 'react';
 import editIcon from '../images/edit-icon.svg';
 import addIcon from '../images/add-icon.svg';
-import api from '../utils/Api';
 import Card from './Card';
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
+
 
 function Main(props) {
 
-  const [userName, setUserName] = React.useState('');
-  const [userDescription , setUserDescription ] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
+  const currentUser = React.useContext(CurrentUserContext);
 
-  React.useEffect(()=>{
-    api.getUserInfo()
-    .then(res=>{
-      setUserName(res.name)
-      setUserDescription(res.about)
-      setUserAvatar(res.avatar)
-    })
-    .catch(res=>{
-      console.log(`Error:${res}`)
-    })
-  },[])
-
-  const [cards, setCards] = React.useState([])
-
-  React.useEffect(()=>{
-    api.getCards()
-    .then(res =>{
-      setCards(res)
-    })
-    .catch(res=>{
-      console.log(`Error:${res}`)
-    })
-  }
-  ,[])
-
- 
   return (
   <main className="main">
     <section className="profile">
@@ -51,21 +24,22 @@ function Main(props) {
           </button>
           <img
             className="profile__image"
-            src={userAvatar}
+            src={currentUser.avatar}
             alt="Фото профиля"
           />
         </div>
         <div>
           <div className="profile__container">
-            <h1 className="profile__title">{userName}</h1>
+            <h1 className="profile__title">{currentUser.name}</h1>
             <button className="button button_type_edit" onClick={props.onEditProfile} type="button" />
           </div>
-          <p className="profile__subtitle">{userDescription}</p>
+          <p className="profile__subtitle">{currentUser.about}</p>
         </div>
       </div>
       <button type="button" className="button button_type_add" onClick={props.onAddPlace} >
         <img
           className="button__add-icon"
+          onClick={props.onAddCard}
           src={addIcon}
           alt="Иконка добавить"
         />
@@ -73,10 +47,15 @@ function Main(props) {
     </section>
     <section className="elements">
       <ul className="elements__grid">
-        {cards.map((item) => (
-          <Card key={item._id} dataCards={item} onClick={props.onCardClick}/>
+        {Array.from(props.cards).map((item) => (
+            <Card 
+              key={item._id} 
+              dataCards = {item} 
+              onCardClick={props.onCardClick}
+              onCardLike ={props.onCardLike}
+              onCardDelete ={props.onCardDelete}
+            />
           ))}
-        
       </ul>
     </section>
   </main>
