@@ -2,22 +2,9 @@ import React from 'react';
 
 function DeleteSubmitPopup(props){
 
-  const [buttonText, setButtonText] = React.useState("Да");
-
- 
   function handleSubmit(e) {
     e.preventDefault();
-    setButtonText("Сохранение...");
-    props
-      .onCardDelete(props.card)
-      .then(() => handleClosePopup())
-      .finally(() => {
-        setButtonText("Да");
-      });
-  }
-
-  function handleClosePopup() {
-    props.onClose();
+    props.onCardDelete(props.card)
   }
 
   return(
@@ -25,7 +12,7 @@ function DeleteSubmitPopup(props){
     <div className="popup__window">
       <button type="button" className="button button_type_close" onClick={props.onClose}></button>
       <h2 className="popup__heading">Вы уверены?</h2>
-      <form className="form form_type_add" onSubmit={handleSubmit} onClose={handleClosePopup} name="add-form" novalidate>
+      <form className="form form_type_add" onSubmit={handleSubmit} onClick ={ props.onClose } name="add-form" novalidate>
         <button className="button button_type_submit" type="submit">Да</button>
       </form>
     </div>

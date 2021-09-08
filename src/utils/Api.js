@@ -81,16 +81,13 @@ export class Api {
     .then(this._getResponseData)
   }
 
-  changeCardStatus (cardId, isLiked) {
-    return isLiked ? this.deleteCard(cardId) : this.addCard(cardId);
-  }
-
-  changeLikeCardStatus(card, isLiked) {
-    if (isLiked) {
-      return this.setLike(card);
-    } else {
-      return this.deleteLike(card);
-    }
+  changeLikeCardStatus(cardId, isLiked) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`,
+      {
+        method: isLiked ? "PUT" : "DELETE",
+        headers: this._headers
+      })
+      .then(this._getResponseData)
   }
 
 }

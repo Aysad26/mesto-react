@@ -43,8 +43,7 @@ function App() {
 
   const [selectedCard, setSelectedCard] = React.useState({});
 
-  const [cards, setCards] = React.useState([]);
-  
+ 
   function handleCardClick(dataCards) { 
     setSelectedCard(dataCards); 
     setImagePopupOpen(true); 
@@ -123,31 +122,31 @@ function App() {
     })
   },[])
 
+  
+    //Функция лайка карточки
+ function handleCardLike(card) {
+  //Проверяем, есть ли уже лайк на этой карточке
+  const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+  // Отправляем запрос в API и получаем обновлённые данные карточки
+  api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+    // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
+    const newCards = currentCards.map((c) => c._id === card._id ? newCard : c);
+    // Обновляем стейт
+    setCurrentCards(newCards);
+  })
+    .catch(err => console.log(err));
+}
+
  
-  function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api.changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
-        setCards(newCards);
+  //Функция удаления карточки, по аналогии с функцией лайка
+  function handleCardDelete(card) {
+    api.deleteCard(card._id)
+      .then(() => {
+        setCurrentCards(currentCards.filter(item => item._id !== card._id));
       })
-      .catch(res=>{
-        console.log(`Error:${res}`)
-      });
+      .catch(err => console.log(err));
   }
-
- 
-  function handleCardDelete (card) {
-    const isOwn = card.owner._id === currentUser._id;
-    api.changeCardStatus(card._id, isOwn)
-    .then((newCard) => {
-      setCurrentCards((currentCards) => [...currentCards].filter((c) => c._id === card._id ? console.log(newCard) : c));
-      closeAllPopups();
-    }).catch(res=>{
-      console.log(`Error:${res}`)
-    });
-
-   }
 
 
    function handleAddPlaceSubmit(e){
