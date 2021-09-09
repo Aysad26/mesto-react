@@ -38,7 +38,7 @@ function Card(props) {
         <div className="elements__info">
           <h2 className="elements__title">{props.dataCards.name}</h2>
           <div className="elements__like-container">
-            <button className={`${cardLikeButtonClassName}`} type="button" onClick ={handleCardLike}/>
+            <button className={`${cardLikeButtonClassName}`} type="button" onClick={handleCardLike}/>
             <p className="elements__like-counter">{props.dataCards.likes.length}</p>
           </div>
         </div>

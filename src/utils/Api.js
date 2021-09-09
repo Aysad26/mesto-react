@@ -36,13 +36,16 @@ export class Api {
     .then(this._getResponseData)
   }
 
-  changeUserImage(data) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify(data)
-    })
-    .then(this._getResponseData)
+   changeUserImage(url) {
+    return fetch(`${this._baseUrl}/users/me/avatar`,
+      {
+        method: "PATCH",
+        headers: this._headers,
+        body: JSON.stringify({
+          avatar: url
+        })
+      })
+      .then(this._getResponseData)
   }
   
   addCard({name, link}) {
@@ -81,13 +84,16 @@ export class Api {
     .then(this._getResponseData)
   }
 
-  changeLikeCardStatus(cardId, isLiked) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`,
-      {
-        method: isLiked ? "PUT" : "DELETE",
-        headers: this._headers
-      })
-      .then(this._getResponseData)
+  changeCardStatus (cardId, isLiked) {
+    return isLiked ? this.deleteCard(cardId) : this.addCard(cardId);
+  }
+
+  changeLikeCardStatus(card, isLiked) {
+    if (isLiked) {
+      return this.setLike(card);
+    } else {
+      return this.deleteLike(card);
+    }
   }
 
 }
