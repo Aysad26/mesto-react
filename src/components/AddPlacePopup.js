@@ -5,6 +5,11 @@ function AddPlacePopup (props){
   const cardsNameRef = React.useRef();
   const cardsLinkRef = React.useRef();
   
+  React.useEffect(() => {
+    cardsNameRef.current.value = ""
+    cardsLinkRef.current.value = ""
+  }, [props.isOpen])
+  
   function handleSubmit (e){
       e.preventDefault();
       props.onAddPlace({

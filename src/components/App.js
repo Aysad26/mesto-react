@@ -7,7 +7,6 @@ import Main from './Main';
 import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
-import { CurrentCardsContext} from '../contexts/CurrentCardsContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
@@ -33,7 +32,9 @@ function App() {
   }
 
   const [deleteSubmitPopup, setDeleteSubmitPopup] = React.useState(false);
+
   const [deleteCard, setDeleteCard] = React.useState({});
+
   function handleDeleteSubmitPopup (card){
     setDeleteCard(card)
     setDeleteSubmitPopup(true)
@@ -76,18 +77,23 @@ function App() {
     
   }, [isEditProfilePopupOpen, isEditAvatarPopupOpen, isAddPlacePopupOpen, isImagePopupOpen]);
 
-  const [currentUser,setCurrentUser] = React.useState({})
+  const [currentUser,setCurrentUser] = React.useState({});
 
-  React.useEffect(()=>{
-    api.getUserInfo()
-    .then(res =>{
-      setCurrentUser(res)
-    })
-    .catch(res=>{
-      console.log(`Ошибка:${res}`)
-    })
-  },[])
+  const [userInfoGet, setUserInfoGet] = React.useState(false);
 
+  const [currentCards,setCurrentCards] = React.useState([])
+
+  React.useEffect(() => {
+    Promise.all([api.getUserInfo(), api.getCards()])
+      .then(([userInfo, cardList]) => {
+        setCurrentUser(userInfo);
+        setCurrentCards(cardList);
+        setUserInfoGet(true);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  
   function handleUpdateUser (e){
     api.changeUserInfo(e)
     .then((res)=>{
@@ -110,24 +116,11 @@ function App() {
     })
   }
 
-  const [currentCards,setCurrentCards] = React.useState([])
   
-  React.useEffect(()=>{
-    api.getCards()
-    .then( res =>{
-      setCurrentCards(res)
-    })
-    .catch(res=>{
-      console.log(`Error:${res}`)
-    })
-  },[])
-
-  
-    //Функция лайка карточки
+ //Функция лайка карточки
  function handleCardLike(card) {
   //Проверяем, есть ли уже лайк на этой карточке
   const isLiked = card.likes.some(i => i._id === currentUser._id);
-
   // Отправляем запрос в API и получаем обновлённые данные карточки
   api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
     // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
@@ -144,6 +137,7 @@ function App() {
     api.deleteCard(card._id)
       .then(() => {
         setCurrentCards(currentCards.filter(item => item._id !== card._id));
+        closeAllPopups();
       })
       .catch(err => console.log(err));
   }
@@ -162,10 +156,10 @@ function App() {
 
   return (
   <div className="root">
-    <CurrentCardsContext.Provider value={currentCards}>
-      <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={currentUser}>
         <Header />
         <Main 
+          loader={userInfoGet}
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddCard ={handleAddPlaceClick}
@@ -178,14 +172,9 @@ function App() {
         <EditProfilePopup onUpdateUser={handleUpdateUser} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
         <EditAvatarPopup onUpdateAvatar={handleUpdateAvatar} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
         <AddPlacePopup onAddPlace={handleAddPlaceSubmit} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}/>
-        <DeleteSubmitPopup 
-                card={deleteCard} 
-                isOpen={deleteSubmitPopup}
-                onClose={closeAllPopups}
-                onCardDelete={handleCardDelete}/>
+        <DeleteSubmitPopup card={deleteCard} isOpen={deleteSubmitPopup} onClose={closeAllPopups} onCardDelete={handleCardDelete}/>
         <ImagePopup card={selectedCard} onClose={closeAllPopups} isOpen={isImagePopupOpen}/>
       </CurrentUserContext.Provider>
-    </CurrentCardsContext.Provider>
   </div>
   );
 }

@@ -23,11 +23,11 @@ function Card(props) {
   }  
 
   function handleCardLike(){
-    props.onCardLike (props.dataCards);
+    props.onCardLike(props.dataCards);
   }
 
   function handleDeleteClick (){
-    props.onCardDelete (props.dataCards);
+    props.onCardDelete(props.dataCards);
   }
 
   

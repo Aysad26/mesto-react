@@ -36,10 +36,9 @@ function Main(props) {
           <p className="profile__subtitle">{currentUser.about}</p>
         </div>
       </div>
-      <button type="button" className="button button_type_add" onClick={props.onAddPlace} >
+      <button type="button" className="button button_type_add" onClick={props.onAddCard} >
         <img
           className="button__add-icon"
-          onClick={props.onAddCard}
           src={addIcon}
           alt="Иконка добавить"
         />
